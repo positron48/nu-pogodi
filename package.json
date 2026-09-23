@@ -1,0 +1,11 @@
+{
+  "name": "nu-pogodi-im02",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser emulation of Elektronika IM-02 using its original ROM",
+  "scripts": {
+    "start": "node scripts/serve.cjs",
+    "build": "node scripts/build.cjs",
+    "test": "node --test tests/*.test.cjs"
+  }
+}

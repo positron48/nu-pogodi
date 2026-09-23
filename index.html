@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e5e2dc">
+  <meta name="description" content="Ну, погоди! Электроника ИМ-02 в браузере. Оригинальная прошивка, сегментный экран, игры А и Б, часы и будильник.">
+  <title>Ну, погоди! — Электроника ИМ-02</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="js/rom.js"></script>
+  <script defer src="js/artwork.js"></script>
+  <script defer src="js/sm5a.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+  <main>
+    <header class="masthead">
+      <div><span class="brand-mark" aria-hidden="true">ИМ</span><span>КАРМАННАЯ ЭЛЕКТРОННАЯ ИГРА</span></div>
+      <span class="model">ИМ-02 <span aria-hidden="true">/</span> 1984</span>
+    </header>
+    <h1 class="visually-hidden">Ну, погоди! — Электроника ИМ-02</h1>
+    <section class="game" aria-label="Игровая консоль Электроника ИМ-02">
+      <div class="device" id="device">
+        <img class="screen-background" src="assets/background.png" alt="" draggable="false">
+        <div class="lcd" id="lcd" role="img" aria-label="Жидкокристаллический экран игры"></div>
+        <img class="screen-foreground" src="assets/foreground.png" alt="" draggable="false">
+        <img class="case" src="assets/unit.png" width="2782" height="1654" alt="Корпус игры Ну, погоди! с оригинальными надписями и кнопками" draggable="false">
+        <button class="hardware direction up-left" data-key="upLeft" aria-label="Корзина слева вверху — Q" title="Слева вверху · Q"><span class="visually-hidden">↖</span></button>
+        <button class="hardware direction down-left" data-key="downLeft" aria-label="Корзина слева внизу — A" title="Слева внизу · A"><span class="visually-hidden">↙</span></button>
+        <button class="hardware direction up-right" data-key="upRight" aria-label="Корзина справа вверху — P" title="Справа вверху · P"><span class="visually-hidden">↗</span></button>
+        <button class="hardware direction down-right" data-key="downRight" aria-label="Корзина справа внизу — L" title="Справа внизу · L"><span class="visually-hidden">↘</span></button>
+        <button class="hardware mode game-a" data-key="gameA" aria-label="Игра А" title="Игра А · 1"><span class="visually-hidden">Игра А</span></button>
+        <button class="hardware mode game-b" data-key="gameB" aria-label="Игра Б" title="Игра Б · 2"><span class="visually-hidden">Игра Б</span></button>
+        <button class="hardware mode time" data-key="time" aria-label="Время" title="Время · T"><span class="visually-hidden">Время</span></button>
+        <button class="hardware pin alarm" data-key="alarm" aria-label="Будильник" title="Будильник · B"><span class="visually-hidden">Будильник</span></button>
+        <button class="hardware pin reset" id="set-time" aria-label="Установка времени" title="Установка времени"><span class="visually-hidden">Установка времени</span></button>
+      </div>
+      <p class="status" id="status" aria-live="polite">Нажмите «Игра А» или «Игра Б»</p>
+      <div class="keyboard-guide" aria-label="Управление с клавиатуры">
+        <span><kbd>Q</kbd><kbd>A</kbd> слева</span>
+        <span class="guide-divider" aria-hidden="true"></span>
+        <span><kbd>P</kbd><kbd>L</kbd> справа</span>
+        <span class="guide-divider" aria-hidden="true"></span>
+        <span><kbd>1</kbd><kbd>2</kbd> начать игру</span>
+      </div>
+      <p class="touch-guide">Нажимайте красные кнопки на корпусе.<br>Поверните телефон горизонтально, чтобы увеличить игру.</p>
+    </section>
+    <footer class="toolbar" aria-label="Настройки веб-версии">
+      <div class="tools">
+        <button id="sound" aria-pressed="true" title="Звук · M"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Zm4 3a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg><span>Звук</span></button>
+        <button id="pause" aria-pressed="false" title="Пауза · Пробел"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span>Пауза</span></button>
+        <button id="fullscreen" title="На весь экран · F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg><span>На весь экран</span></button>
+      </div>
+      <button class="help-button" id="help">Как играть <span aria-hidden="true">↗</span></button>
+    </footer>
+    <p class="credit">powered by <a href="https://positroid.tech/" target="_blank" rel="noopener noreferrer">@positroid</a></p>
+    <noscript><p class="error">Для игры нужно включить JavaScript в браузере.</p></noscript>
+  </main>
+  <dialog id="instructions" aria-labelledby="help-title">
+    <form method="dialog"><button class="close" aria-label="Закрыть инструкцию">×</button></form>
+    <span class="eyebrow">ЭЛЕКТРОНИКА ИМ-02</span>
+    <h2 id="help-title">Ну, погоди!</h2>
+    <p>Поймайте корзиной яйца с четырёх лотков. За каждое пойманное яйцо — одно очко.</p>
+    <dl>
+      <dt>Игра А</dt><dd>Яйца катятся по трём лоткам. Незадействованный лоток меняется после промахов.</dd>
+      <dt>Игра Б</dt><dd>Задействованы все четыре лотка.</dd>
+      <dt>Промахи</dt><dd>Разбитое яйцо — один штраф. Если в окне есть Заяц — половина штрафа: цыплёнок мигает. Три штрафа завершают игру.</dd>
+      <dt>200 и 500</dt><dd>Штрафы сбрасываются. После 999 счёт начинается с 000, а игра продолжается.</dd>
+    </dl>
+    <h3>Управление</h3>
+    <p><kbd>Q</kbd> / <kbd>A</kbd> — слева вверху / внизу.<br><kbd>P</kbd> / <kbd>L</kbd> — справа вверху / внизу.<br><kbd>1</kbd> / <kbd>2</kbd> — игра А / Б. <kbd>T</kbd> — время.<br><kbd>B</kbd> — будильник. <kbd>Пробел</kbd> — пауза.<br>Кнопки на корпусе работают мышью и касанием.</p>
+    <h3>Часы и будильник</h3>
+    <p id="clock-help">Нажмите маленькую кнопку под значком часов. Левыми красными кнопками установите часы, правыми — минуты. Затем нажмите «Время». Обозначения ДП и ПП означают «до полудня» и «после полудня».</p>
+    <p>Для настройки будильника нажмите маленькую кнопку под колокольчиком и выставьте время теми же красными кнопками. Повторное нажатие включает или выключает колокольчик. Кнопка «Время» завершает настройку и выключает звонок.</p>
+    <p class="fine-print">В веб-версии игра приостанавливается при уходе со страницы. Пауза, выключение звука и полноэкранный режим находятся под корпусом.</p>
+    <details><summary>Об этой версии и источники</summary><p>В браузере исполняется оригинальная прошивка ИМ-02 на эмуляторе КБ1013ВК1-2 / SM5A. Сегменты, правила, ускорение, часы и звуковые сигналы задаёт прошивка.</p><p>Ядро основано на <a href="https://github.com/mamedev/mame/tree/master/src/devices/cpu/sm510" target="_blank" rel="noreferrer">MAME (hap, при участии Igor)</a>. Оформление: Lee Robson (hydef), скан фона: Henrik Algestam. <a href="docs/SOURCES.md" target="_blank">Источники и границы точности</a>.</p></details>
+  </dialog>
+</body>
+</html>
