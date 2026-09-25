@@ -1,6 +1,7 @@
 (function () {
   'use strict';
   const $ = id => document.getElementById(id);
+  const t = key => NP_I18N.t(key);
   const cpu = new SM5A(NP_ROM);
   const buttons = [...document.querySelectorAll('[data-key]')];
   const inputs = new Map();
@@ -97,12 +98,9 @@
   }
   function status() {
     $('pause').setAttribute('aria-pressed', String(paused));
-    $('pause').querySelector('span').textContent = paused ? 'Продолжить' : 'Пауза';
-    $('status').textContent = paused ? 'Пауза · нажмите Пробел или «Продолжить»' :
-      mode === 'time' ? 'Нажмите «Игра А» или «Игра Б»' :
-      mode === 'setTime' ? 'Настройка времени · слева — часы, справа — минуты; затем «Время»' :
-      mode === 'alarm' ? 'Будильник · слева — часы, справа — минуты; затем «Время»' :
-      `Игра ${mode === 'gameA' ? 'А' : 'Б'} · ловите яйца красными кнопками`;
+    $('pause').querySelector('span').textContent = t(paused ? 'resume' : 'pause');
+    $('sound').querySelector('span').textContent = t(muted ? 'muted' : 'sound');
+    $('status').textContent = t(paused ? 'paused' : mode);
   }
   function press(token, name) {
     if (dialog.open) return;
@@ -173,7 +171,7 @@
   $('sound').addEventListener('click', () => {
     muted = !muted;
     $('sound').setAttribute('aria-pressed', String(!muted));
-    $('sound').querySelector('span').textContent = muted ? 'Без звука' : 'Звук';
+    $('sound').querySelector('span').textContent = t(muted ? 'muted' : 'sound');
     if (muted) stopAudio(); else unlockAudio();
     try { localStorage.setItem('im02-muted', String(muted)); } catch {}
   });
@@ -182,7 +180,7 @@
     try {
       if (document.fullscreenElement) await document.exitFullscreen();
       else await document.body.requestFullscreen();
-    } catch { $('status').textContent = 'Полноэкранный режим недоступен в этом браузере'; }
+    } catch { $('status').textContent = t('fullscreenError'); }
   });
   $('help').addEventListener('click', () => { clearInputs(); stopAudio(); dialog.showModal(); lastFrame = 0; });
   dialog.addEventListener('close', () => { lastFrame = 0; });
@@ -218,6 +216,7 @@
     status();
   });
   try { if (localStorage.getItem('im02-muted') === 'true') $('sound').click(); } catch {}
+  document.addEventListener('languagechange', status);
   boot();
 
   function frame(timestamp) {
@@ -239,7 +238,7 @@
       requestAnimationFrame(frame);
     } catch (error) {
       stopAudio();
-      $('status').textContent = 'Ошибка эмулятора. Перезагрузите страницу.';
+      $('status').textContent = t('error');
       console.error(error);
     }
   }
